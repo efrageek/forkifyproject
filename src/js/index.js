@@ -1,9 +1,7 @@
 import Search from './models/Search';
 import { toUnicode } from 'punycode';
-
-// Selectors
-const searchForm = document.querySelector('.search');
-
+import * as searchView from './views/searchView';
+import { elements } from './views/base';
 
 /* Global state object
 - Search Object
@@ -15,27 +13,27 @@ const state = {};
 
 const controlSearch = async () => {
     //1. Get query from view
-    const query = 'pizza'; //todo
+    const query = searchView.getInput();
 
     if (query) {
         //2. new search object an add to state
         state.search = new Search(query);
 
         //3. prepare UI for results
+        searchView.clearInput();
+        searchView.clearResults();
 
         //4 Search for recipes
         await state.search.getResults();
 
         //5. render results on UI
-        console.log(state.search.result);
+        searchView.renderResults(state.search.result);
     }
 
 };
 
-searchForm.addEventListener('submit', e => {
+elements.searchForm.addEventListener('submit', e => {
     e.preventDefault();
     controlSearch();
 });
 
-const search = new Search('pizza');
-console.log(search);
