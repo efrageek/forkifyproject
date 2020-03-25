@@ -1,5 +1,6 @@
 import { elements } from './base';
 
+//returning search input value
 export const getInput = () => elements.searchInput.value;
 
 export const clearInput = () => {
@@ -20,6 +21,8 @@ const limitRecipeTitle = (title, limit = 17) => {
             return acc + cur.length;
         }, 0);
         //retuning the new title
+        //Join method concatenate elements in a string with 
+        //A separator
         return `${newTitle.join(' ')}...`;
     }
     return title;
@@ -27,6 +30,7 @@ const limitRecipeTitle = (title, limit = 17) => {
 };
 
 const renderRecipe = recipe => {
+    //rendering results with real data
     const markup = `
     <li>
     <a class="results__link" href="${recipe.recipe_id}">
@@ -41,6 +45,7 @@ const renderRecipe = recipe => {
     </li>
     `;
 
+    //adding results to html
     elements.searchResultList.insertAdjacentHTML('beforeend', markup);
     
 };
