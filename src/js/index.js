@@ -1,6 +1,7 @@
 import Search from './models/Search';
 import { toUnicode } from 'punycode';
 import * as searchView from './views/searchView';
+import * as recipeView from './views/recipeView';
 import { elements, renderLoader, clearLoader } from './views/base';
 import Recipe from './models/Recipe';
 
@@ -50,6 +51,11 @@ elements.searchForm.addEventListener('submit', e => {
     e.preventDefault();
     controlSearch();
 });
+
+
+
+
+
 //pagination button listener
 elements.searchResPages.addEventListener('click', e => {
     const btn = e.target.closest('.btn-inline');
@@ -76,9 +82,14 @@ const controlRecipe = async () => {
         //create new recipe object
         state.recipe = new Recipe(id);
 
+        //TESTING
+        //window.r = state.recipe;
+
         try {
-            //Get recipe data
+            //Get recipe data and parse ingredients
             await state.recipe.getRecipe();
+            console.log(state.recipe.ingredients);
+            state.recipe.parseIngredients();
     
             //caculate sevings and time
             state.recipe.calcServings();
@@ -86,6 +97,7 @@ const controlRecipe = async () => {
     
             //render the recipe
             console.log(id);
+            console.log(state.recipe.ingredients);
         } catch(error) {
             alert('Error processing recipe');
         }
